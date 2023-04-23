@@ -1,15 +1,6 @@
 import React, { useState } from "react";
-
-const days = [
-	{ name: "Sunday", value: 0 },
-	{ name: "Monday", value: 1 },
-	{ name: "Tuesday", value: 2 },
-	{ name: "Wednesday", value: 3 },
-	{ name: "Thursday", value: 4 },
-	{ name: "Friday", value: 5 },
-	{ name: "Saturday", value: 6 },
-];
-
+import { NumberInput } from "@mantine/core";
+import "./Daytime.css"
 const times = [
 	{ name: "0:00 AM", value: 0 },
 	{ name: "1:00 AM", value: 1 },
@@ -55,24 +46,6 @@ const TimeDropdown = (props) => {
 	);
 };
 
-const DayDropdown = (props) => {
-	const handleDayChange = (event) => {
-		props.setSelectedDay(event.target.value);
-	};
-
-	return (
-		<select value={props.selectedDay} onChange={handleDayChange} id="options">
-			{days.map((e) => {
-				return (
-					<option key={e.value} value={e.value}>
-						{e.name}
-					</option>
-				);
-			})}
-		</select>
-	);
-};
-
 export default function App(props) {
 	return (
 		<>
@@ -83,9 +56,22 @@ export default function App(props) {
 					setSelectedTime={props.setSelectedTime}
 				/>
 				<h2>Select Day:</h2>
-				<DayDropdown
-					selectedDay={props.selectedDay}
-					setSelectedDay={props.setSelectedDay}
+				<NumberInput
+					defaultValue={1}
+					hideControls
+					min={1}
+					max={30}
+					value={props.selectedDay}
+					onChange={props.setSelectedDay}
+				/>
+				<h2>Select Month:</h2>
+				<NumberInput
+					defaultValue={1}
+					hideControls
+					min={1}
+					max={12}
+					value={props.selectedMonth}
+					onChange={props.setSelectedMonth}
 				/>
 			</div>
 			<div className="submit container">

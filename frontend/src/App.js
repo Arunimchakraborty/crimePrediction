@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 // import React, { useState } from 'react';
-import "./App.css";
 import "./components/dropdowns.css";
 import "./components/Daytime.css";
 import Navbar from "./components/Navbar";
@@ -8,10 +7,17 @@ import Dropdowns from "./components/Dropdowns";
 import Daytime from "./components/Daytime";
 
 import axios from "axios";
+import Heatmap from "./components/Heatmap";
 
-const axiosReqHandler = (district, day, hour, setRes) => {
+const axiosReqHandler = (year, month, day, hour, setRes) => {
 	axios
-		.get(`http://127.0.0.1:5000/district/${district}/day/${day}/hour/${hour}`)
+		.get(
+			`http://127.0.0.1:5000/date/${year.toString().padStart(2, "0")}-${month
+				.toString()
+				.padStart(2, "0")}-${day.toString().padStart(2, "0")} ${hour
+				.toString()
+				.padStart(2, "0")}:00:00`
+		)
 		.then(function (response) {
 			console.log(response.data);
 			setRes(response.data);
@@ -32,31 +38,49 @@ function Result(props) {
 
 function App() {
 	const [selectedDay, setSelectedDay] = useState(0);
+	const [selectedMonth, setSelectedMonth] = useState(0);
 	const [selectedTime, setSelectedTime] = useState(0);
-	const [selectedDistrict, setSelectedDistrict] = useState(0);
+	const [selectedYear, setSelectedYear] = useState("2023");
 	const [res, setRes] = useState(undefined);
 
 	useEffect(() => {
 		console.log({ selectedDay, selectedTime });
 	}, [selectedDay, selectedTime]);
+
+	useEffect(() => {}, [res]);
 	return (
 		<>
 			<Navbar />
-			<Dropdowns
-				selectedOption={selectedDistrict}
-				setSelectedOption={setSelectedDistrict}
-			/>{" "}
-			{/*District Dropdowns*/}
-			<Daytime
-				selectedTime={selectedTime}
-				setSelectedTime={setSelectedTime}
-				selectedDay={selectedDay}
-				setSelectedDay={setSelectedDay}
-				handler={() =>
-					axiosReqHandler(selectedDistrict, selectedDay, selectedTime, setRes)
-				}
-			/>
-			<Result result={res} />
+			<div style={{ display: "flex", width: "100%", flexDirection: "row" }}>
+				<div style={{paddingLeft: 20}}>
+					<Dropdowns
+						selectedOption={selectedYear}
+						setSelectedOption={setSelectedYear}
+					/>{" "}
+					{/*District Dropdowns*/}
+					<Daytime
+						selectedTime={selectedTime}
+						setSelectedTime={setSelectedTime}
+						selectedDay={selectedDay}
+						setSelectedDay={setSelectedDay}
+						selectedMonth={selectedMonth}
+						setSelectedMonth={setSelectedMonth}
+						handler={() =>
+							axiosReqHandler(
+								selectedYear,
+								selectedMonth,
+								selectedDay,
+								selectedTime,
+								setRes
+							)
+						}
+					/>
+				</div>
+				{/* <Result result={res} /> */}
+				<div style={{paddingLeft: 40}}>
+					{res ? <Heatmap res={res} /> : null}
+				</div>
+			</div>
 		</>
 	);
 }
