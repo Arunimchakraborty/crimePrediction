@@ -17,7 +17,7 @@ function Dropdowns(props) {
 
 	return (
 		<div className="Dropdowns" id="drpdwns">
-			<h1>Crime Detection and Prediction</h1>
+			<h1>Crime Prediction</h1>
 			<div className="dropdown" id="drpdwn">
 				{/* <label htmlFor="options" id="lbl">
 					Select an option:
