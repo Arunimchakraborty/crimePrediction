@@ -1,0 +1,4 @@
+venv/
+CSVS/
+/ipynb_checkpoints/
+extras/

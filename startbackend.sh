@@ -1,2 +1,2 @@
-source /Users/arunimchakraborty/MEGA/programming/crimeDetection/venv/bin/activate
+source ./venv/bin/activate
 python flaskBackend/App.py

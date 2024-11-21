@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./flaskBackend
+      dockerfile: Dockerfile
+    container_name: flask-backend
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+    ports:
+      - "5000:5000"
+    depends_on:
+      - frontend
+    networks:
+      - crime-pred-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: react-frontend
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - "3000:3000"
+    networks:
+      - crime-pred-network
+
+networks:
+  crime-pred-network:
+    driver: bridge

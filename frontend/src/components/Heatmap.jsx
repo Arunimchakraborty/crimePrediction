@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Daytime.css";
 import { MapContainer, Marker, Polygon, Popup, TileLayer } from "react-leaflet";
 
@@ -92,6 +92,9 @@ const fillOptions = [
 ];
 
 export default function Heatmap({ res }) {
+	useEffect(() => {
+		console.log(res[0]);
+	})
 	return (
 		<MapContainer
 			center={center}

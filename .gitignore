@@ -26,3 +26,7 @@ yarn-error.log*
 
 .env.test.env
 /.ipynb_checkpoints
+
+flaskenv/
+venv/
+.ipynb_checkpoints/

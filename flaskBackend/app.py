@@ -37,19 +37,19 @@ def initFunc():
 
     # Loading Prophet Models
     print('Loading Prophet Models')
-    with open('ForecastModels/m1.json', 'r') as fin:
+    with open('./ForecastModels/m1.json', 'r') as fin:
         m1 = model_from_json(fin.read())  # Load model1
-    with open('ForecastModels/m2.json', 'r') as fin:
+    with open('./ForecastModels/m2.json', 'r') as fin:
         m2 = model_from_json(fin.read())  # Load model2
-    with open('ForecastModels/m3.json', 'r') as fin:
+    with open('./ForecastModels/m3.json', 'r') as fin:
         m3 = model_from_json(fin.read())  # Load model3
-    with open('ForecastModels/m4.json', 'r') as fin:
+    with open('./ForecastModels/m4.json', 'r') as fin:
         m4 = model_from_json(fin.read())  # Load model4
-    with open('ForecastModels/m5.json', 'r') as fin:
+    with open('./ForecastModels/m5.json', 'r') as fin:
         m5 = model_from_json(fin.read())  # Load model5
-    with open('ForecastModels/m6.json', 'r') as fin:
+    with open('./ForecastModels/m6.json', 'r') as fin:
         m6 = model_from_json(fin.read())  # Load model6
-    with open('ForecastModels/m7.json', 'r') as fin:
+    with open('./ForecastModels/m7.json', 'r') as fin:
         m7 = model_from_json(fin.read())  # Load model7
 
 
@@ -64,11 +64,12 @@ def getPred(m, date, district):
 def getCluster(val):
     # Load the saved model from the file
     print(f'Assigning Cluster to {val}')
-    model = joblib.load('flaskBackend/forecastLabels.pkl')
+    model = joblib.load('./forecastLabels.pkl')
     data = np.array([val])
     data = data.reshape(-1, 1)
     label = model.predict(data)
-    return label[0]
+    # print(f'Label Type: {type(label[0].item())}')
+    return label[0].item()
 
 
 labels = ['Normal', 'Very Low', 'High', 'Low', 'Very High']
